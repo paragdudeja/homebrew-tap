@@ -1,8 +1,8 @@
 class Tabsnap < Formula
   desc "Snapshot open browser tabs to markdown, with optional AI triage"
   homepage "https://github.com/paragdudeja/tabsnap"
-  url "https://github.com/paragdudeja/tabsnap/archive/refs/tags/v0.1.1.tar.gz"
-  sha256 "e90460c743512f4362fa3549111516c617edb55b8f616a36ba14dd2a986c440d"
+  url "https://github.com/paragdudeja/tabsnap/archive/refs/tags/v0.1.2.tar.gz"
+  sha256 "e558754190eab9cafa8bb7fc3ebe34a12a35649302c819db828c7dd444ef0795"
   license "MIT"
 
   depends_on "jq"
