@@ -1,0 +1,25 @@
+name: brew test
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+jobs:
+  test:
+    runs-on: macos-latest
+    steps:
+      - name: Set up Homebrew
+        id: set-up-homebrew
+        uses: Homebrew/actions/setup-homebrew@main
+
+      - name: Audit formulae
+        run: brew audit --strict --online --tap paragdudeja/tap
+
+      - name: Install and test formulae
+        run: |
+          for f in Formula/*.rb; do
+            name="paragdudeja/tap/$(basename "$f" .rb)"
+            brew install "$name"
+            brew test "$name"
+          done

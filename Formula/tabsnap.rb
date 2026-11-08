@@ -14,6 +14,14 @@ class Tabsnap < Formula
 
   test do
     assert_match version.to_s, shell_output("#{bin}/tabsnap --version")
-    assert_match "ANTHROPIC_API_KEY", shell_output("env -u ANTHROPIC_API_KEY #{bin}/tabsnap triage 2>&1", 1)
+    (testpath/"snap.md").write <<~EOS
+      ## Safari — 2 tabs
+
+      - [ ] [Open me](https://example.com/a)
+      - [x] [Already done](https://example.com/b)
+    EOS
+    output = shell_output("#{bin}/tabsnap restore --dry-run #{testpath}/snap.md")
+    assert_match "Would reopen 1 tabs", output
+    assert_match "[Safari] https://example.com/a", output
   end
 end
