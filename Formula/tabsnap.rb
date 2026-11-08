@@ -1,16 +1,23 @@
 class Tabsnap < Formula
   desc "Snapshot open browser tabs to markdown, with optional AI triage"
   homepage "https://github.com/paragdudeja/tabsnap"
-  url "https://github.com/paragdudeja/tabsnap/archive/refs/tags/v0.2.4.tar.gz"
-  sha256 "91a2a4c924d579a79cb36db18e5ecea41231e180f8c1e63aa80fe60dfb43e2d1"
+  url "https://github.com/paragdudeja/tabsnap/archive/refs/tags/v0.2.5.tar.gz"
+  sha256 "82b95c9c1ec8886f705b517aad69c5a6a07f14613d049bcbb81839ebc8560e0e"
   license "MIT"
 
   depends_on "jq"
   depends_on :macos
 
   def install
-    bin.install "tabsnap", "tabsnap-triage", "tabsnap-restore", "tabsnap-setup"
-    pkgshare.install "swiftbar"
+    bin.install "tabsnap", "tabsnap-triage", "tabsnap-restore", "tabsnap-setup", "tabsnap-search"
+    pkgshare.install "swiftbar", "skills"
+  end
+
+  def caveats
+    <<~EOS
+      Finish setting up (browser access, menu bar counter, Claude Code skill):
+        tabsnap setup
+    EOS
   end
 
   test do
@@ -26,5 +33,9 @@ class Tabsnap < Formula
     assert_match "[Safari] https://example.com/a", output
     (testpath/"config").write "warn = 12\n"
     assert_match "warn  = 12", shell_output("TABSNAP_CONFIG=#{testpath}/config #{bin}/tabsnap config")
+    (testpath/"snaps").mkpath
+    cp testpath/"snap.md", testpath/"snaps/tabs_2026-01-01_00-00-00.md"
+    assert_match "example.com/a", shell_output("TABSNAP_DIR=#{testpath}/snaps #{bin}/tabsnap search open me")
+    assert_path_exists pkgshare/"skills/tabsnap/SKILL.md"
   end
 end
