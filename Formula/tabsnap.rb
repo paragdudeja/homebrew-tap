@@ -1,8 +1,8 @@
 class Tabsnap < Formula
   desc "Snapshot open browser tabs to markdown, with optional AI triage"
   homepage "https://github.com/paragdudeja/tabsnap"
-  url "https://github.com/paragdudeja/tabsnap/archive/refs/tags/v0.1.2.tar.gz"
-  sha256 "e558754190eab9cafa8bb7fc3ebe34a12a35649302c819db828c7dd444ef0795"
+  url "https://github.com/paragdudeja/tabsnap/archive/refs/tags/v0.2.0.tar.gz"
+  sha256 "852c1e6da366c3c23b5a0572160734351f00b6c08a25bab5729c0b2cb4e58e3d"
   license "MIT"
 
   depends_on "jq"
@@ -10,6 +10,7 @@ class Tabsnap < Formula
 
   def install
     bin.install "tabsnap", "tabsnap-triage", "tabsnap-restore"
+    pkgshare.install "swiftbar"
   end
 
   test do
